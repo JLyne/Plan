@@ -21,8 +21,10 @@ import com.djrapitops.plan.PlanVelocity;
 import com.djrapitops.plan.api.events.PlanVelocityEnableEvent;
 import com.djrapitops.plan.capability.CapabilitySvc;
 import com.djrapitops.plan.gathering.listeners.velocity.PlayerOnlineListener;
+import com.djrapitops.plan.gathering.listeners.velocity.SuperVanishBridgeListener;
 import net.playeranalytics.plugin.server.Listeners;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -33,18 +35,27 @@ public class VelocityListenerSystem extends ListenerSystem {
 
     private final PlayerOnlineListener playerOnlineListener;
 
+    @Nullable
+    private final SuperVanishBridgeListener superVanishBridgeListener;
+
     @Inject
     public VelocityListenerSystem(
             Listeners listeners,
-            PlayerOnlineListener playerOnlineListener
+            PlayerOnlineListener playerOnlineListener,
+            @Nullable SuperVanishBridgeListener superVanishBridgeListener
     ) {
         this.listeners = listeners;
         this.playerOnlineListener = playerOnlineListener;
+        this.superVanishBridgeListener = superVanishBridgeListener;
     }
 
     @Override
     protected void registerListeners() {
         listeners.registerListener(playerOnlineListener);
+
+        if(superVanishBridgeListener != null) {
+            listeners.registerListener(superVanishBridgeListener);
+        }
     }
 
     @Override

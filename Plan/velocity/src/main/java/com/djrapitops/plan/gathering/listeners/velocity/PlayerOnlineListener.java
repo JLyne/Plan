@@ -31,6 +31,7 @@ import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.proxy.Player;
+import uk.co.notnull.supervanishbridge.helper.SuperVanishBridgeHelper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -69,6 +70,10 @@ public class PlayerOnlineListener {
 
     @Subscribe(order = PostOrder.LAST)
     public void onPostLogin(PostLoginEvent event) {
+        if(SuperVanishBridgeHelper.getInstance().isVanished(event.getPlayer())) {
+            return;
+        }
+
         try {
             actOnLogin(event);
         } catch (Exception e) {
@@ -89,6 +94,10 @@ public class PlayerOnlineListener {
 
     @Subscribe(order = PostOrder.NORMAL)
     public void beforeLogout(DisconnectEvent event) {
+        if(SuperVanishBridgeHelper.getInstance().isVanished(event.getPlayer())) {
+            return;
+        }
+
         leaveEventConsumer.beforeLeave(PlayerLeave.builder()
                 .server(serverInfo.getServer())
                 .player(new VelocityPlayerData(event.getPlayer()))
@@ -98,6 +107,10 @@ public class PlayerOnlineListener {
 
     @Subscribe(order = PostOrder.LAST)
     public void onLogout(DisconnectEvent event) {
+        if(SuperVanishBridgeHelper.getInstance().isVanished(event.getPlayer())) {
+            return;
+        }
+
         try {
             leaveEventConsumer.onLeaveProxyServer(PlayerLeave.builder()
                     .server(serverInfo.getServer())
@@ -111,6 +124,10 @@ public class PlayerOnlineListener {
 
     @Subscribe(order = PostOrder.LAST)
     public void onServerSwitch(ServerConnectedEvent event) {
+        if(SuperVanishBridgeHelper.getInstance().isVanished(event.getPlayer())) {
+            return;
+        }
+
         try {
             actOnServerSwitch(event);
         } catch (Exception e) {
