@@ -39,6 +39,7 @@ import net.playeranalytics.plugin.PlatformAbstractionLayer;
 import net.playeranalytics.plugin.VelocityPlatformLayer;
 import net.playeranalytics.plugin.scheduling.RunnableFactory;
 import net.playeranalytics.plugin.server.PluginLogger;
+import uk.co.notnull.vanishbridge.helper.VanishBridgeHelper;
 
 import java.io.File;
 import java.io.InputStream;
@@ -59,6 +60,7 @@ import java.util.logging.Level;
         description = "Player Analytics Plugin by AuroraLS3",
         dependencies = {
                 @Dependency(id = "viaversion", optional = true),
+                @Dependency(id = "vanishbridge", optional = true),
                 @Dependency(id = "redisbungee", optional = true)
         },
         authors = {"AuroraLS3"}
@@ -88,6 +90,8 @@ public class PlanVelocity implements PlanPlugin {
 
     @Subscribe
     public void onProxyStart(ProxyInitializeEvent event) {
+        new VanishBridgeHelper(proxy);
+
         abstractionLayer = new VelocityPlatformLayer(this, proxy, new Slf4jLoggerWrapper(slf4jLogger), dataFolderPath);
         logger = abstractionLayer.getPluginLogger();
         runnableFactory = abstractionLayer.getRunnableFactory();

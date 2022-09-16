@@ -45,7 +45,8 @@ import javax.inject.Singleton;
         ProxySuperClassBindingModule.class,
         VelocitySuperClassBindingModule.class,
         VelocityServerPropertiesModule.class,
-        VelocityTaskModule.class
+        VelocityTaskModule.class,
+        VelocityVanishBridgeModule.class
 })
 public interface PlanVelocityComponent {
 
