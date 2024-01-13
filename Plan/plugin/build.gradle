@@ -106,6 +106,10 @@ shadowJar {
 
 tasks.assemble.dependsOn tasks.shadowJar
 
+compileJava {
+    options.release = 25
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
