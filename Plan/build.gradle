@@ -65,7 +65,7 @@ subprojects {
     apply plugin: "jacoco"
 
     compileJava {
-        options.release = 11
+        options.release = 17
     }
 
     ext {
